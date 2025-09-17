@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Info Page</title>
+    <style>
+        /* Fullscreen style */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Video styling */
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Main content container */
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Information styling */
+        .info {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop>
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Main Content -->
+    <div class="content">
+        <div class="info">
+            <h1>Your Information</h1>
+            <p id="ip"></p>
+            <p id="country"></p>
+            <p id="region"></p>
+            <p id="city"></p>
+            <p id="timezone"></p>
+            <p id="isp"></p>
+            <!-- Info will be displayed here dynamically -->
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio autoplay loop>
+        <source src="audio.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <script>
+        // Fetch user info from the ipinfo.io API
+        fetch('https://ipinfo.io/json?token=59f178fd3af3ea')  // Replace with your actual API key
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip').textContent = 'IP Address: ' + data.ip;
+                document.getElementById('country').textContent = 'Country: ' + data.country;
+                document.getElementById('region').textContent = 'Region: ' + data.region;
+                document.getElementById('city').textContent = 'City: ' + data.city;
+                document.getElementById('timezone').textContent = 'Timezone: ' + data.timezone;
+                document.getElementById('isp').textContent = 'ISP: ' + data.org;
+            })
+            .catch(error => {
+                console.error('Error fetching IP info:', error);
+            });
+    </script>
+</body>
+</html>
+
